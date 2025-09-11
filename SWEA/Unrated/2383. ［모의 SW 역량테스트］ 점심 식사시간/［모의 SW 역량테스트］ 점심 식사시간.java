@@ -19,7 +19,7 @@ public class Solution {
 	public static void main(String[] args) throws IOException{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-		int T = Integer.parseInt(st.nextToken()); // 테스트 케이스 수
+		int T = Integer.parseInt(st.nextToken());
 		
 		for(int t = 1; t <= T; t++) {
 			st = new StringTokenizer(br.readLine(), " ");
@@ -82,14 +82,14 @@ public class Solution {
 	        return 0;
 	    }
 	    
-	    // 이 그룹이 어떤 계단을 향하는지에 따라 dist1 또는 dist2로 정렬
+	    // dist1, dist2로 정렬
 	    if (stairIndex == 0) { // 1번 계단
 	        peoples.sort(Comparator.comparingInt(p -> p.dist1));
 	    } else { // 2번 계단
 	        peoples.sort(Comparator.comparingInt(p -> p.dist2));
 	    }
 	    
-	    // 계단에 도착한 사람들의 도착 시간을 저장하는 리스트
+	    // 1분의 대기시간이 있으므로 +1
 	    List<Integer> arriveTimes = new ArrayList<>();
 	    if (stairIndex == 0) {
 	        for (People p : peoples) arriveTimes.add(p.dist1 + 1);
@@ -97,17 +97,16 @@ public class Solution {
 	        for (People p : peoples) arriveTimes.add(p.dist2 + 1);
 	    }
 	    
-	    // 계단을 내려가고 있는 사람들의 '완료 시간'을 저장하는 리스트
+	    // 계단을 내려가고 있는 사람들의 완료 시간을 저장하는 리스트
 	    List<Integer> stairDown = new ArrayList<>();
 	    
 	    int time = 0;
-	    int peopleIndex = 0;
 	    
 	    // 모든 사람이 계단을 내려올 때까지 시뮬레이션
 	    while (true) {
 	        time++;
 	        
-	        // 1. 현재 초에 계단을 내려오는 것을 마친 사람들을 처리
+	        // 현재 초에 계단을 내려오는 것을 마친 사람들을 처리
 	        for (int i = 0; i < stairDown.size(); i++) {
 	            if (stairDown.get(i) <= time) {
 	                stairDown.remove(i);
@@ -115,7 +114,7 @@ public class Solution {
 	            }
 	        }
 	        
-	        // 2. 현재 초에 계단에 도착한 사람들을 계단으로 진입시키기
+	        // 현재 초에 계단에 도착한 사람들을 계단으로 진입시키기
 	        for (int i = 0; i < arriveTimes.size(); i++) {
 	            if (stairDown.size() < 3) {
 	                if (arriveTimes.get(i) <= time) {
@@ -147,7 +146,7 @@ public class Solution {
 			return;
 		}
 		
-		// 0 이면 1 번째 계단 가는 사람이고 , 1 이면 2 번째 계단 가는 사람인가?
+		// 0 이면 1 번째 계단 가는 사람이고 , 1 이면 2 번째 계단 가는 사람  
 		for(int i = 0 ; i< 2 ; i++) {
 			selectedStair[peopleIndex] = i;
 			selectStairs(peopleIndex + 1);
