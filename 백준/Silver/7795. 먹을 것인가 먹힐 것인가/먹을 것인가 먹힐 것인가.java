@@ -43,13 +43,28 @@ public class Main {
     // 1 3 6
     static int result() {
         for (int i = 0; i < A.length; i++) {
-            for (int j = 0; j < B.length; j++) {
-                if(A[i] <= B[j]) continue;
-                if(A[i] > B[j]) count++;
-                else break;
-            }
+            count += binarySearch(B, A[i]);
         }
 
         return count;
     }
+
+    // 1 1 3 7 8
+    // 1 3 6
+    static int binarySearch(int[] arr, int target) {
+        int left = 0;
+        int right = arr.length;
+
+        while(left < right) {
+            int mid = (left + right) / 2;
+
+            if(arr[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        return left;
+    }
 }
+
